@@ -13,6 +13,7 @@ app.use(express.json());
 
 require("./app/routes/author.route")(app);
 require("./app/routes/report.route")(app);
+require("./app/routes/observation.route")(app);
 
 app.get("/", (req, res) => {
     res.json({ message: "Projet de signalisaion" });
