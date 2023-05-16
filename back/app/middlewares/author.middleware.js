@@ -1,27 +1,55 @@
-import { authors } from '../../data/authors';
+const authors = require('../../data/authors'); 
+const errorsKeyValue = require('../errors_message/errors_map');
 
-export const emailAlreadyUsed = (email) => {
+
+const emailAlreadyUsed = (email) => {
     if(authors.find(author => author.email === email)) {
         return true;
     }
     return false;
 };
 
-export const sexeIsValid = (sexe) => {
-    return ['Homme', 'Femme', 'Non-Binaire'].includes(author.sexe)
+const sexeIsValid = (sexe) => {
+    return ['Homme', 'Femme', 'Non-Binaire'].includes(sexe);
 }
 
-export const birthDateIsValid = (birthDate) => {
-    const isdate = Date.parse(mydate);
+const birthDateIsValid = (birthDate) => {
+    const isdate = Date.parse(birthDate);
     if (isNaN(isdate)) {
         return false;
     }
+    return true;
 }
-export const birthDateIsLessThan100Years = (birthDate) => {
-    const EnteredDate = new Date(isdate);
+const birthDateIsLessThan100Years = (birthDate) => {
+    const EnteredDate = new Date(birthDate);
     const now = new Date();
-    if (EnteredDate.getFullYear() > now.getFullYear() + 100) {
+    if (EnteredDate.getFullYear()+100 < now.getFullYear()) {
         return false;
     }
     return true;
+} 
+
+module.exports = checkAuthorFields = (author, res) => {
+    if(!author) {
+        //TODO : create a middleware function  to send error with code 500
+        res.status(500).send(errorsKeyValue.AUTHOR_CANNOT_BE_EMPTY);
+    }
+    if(!author.firstName || !author.lastName || !author.birthDate || !author.sexe || !author.email) {
+        res.status(500).send(errorsKeyValue.AUTHOR_NOT_VALID)
+    }
+    if(author.firstName.length > 50 || author.lastName.length > 50) {
+        res.status(500).send(errorsKeyValue.NAME_TOO_LONG)
+    }
+    if(emailAlreadyUsed(author.email)) {
+        res.status(500).send(errorsKeyValue.EMAIL_ALREADY_USED);
+    } 
+    if(!sexeIsValid(author.sexe)) {
+        res.status(500).send(errorsKeyValue.GENDER_NOT_VALID);
+    }
+    if(!birthDateIsValid(author.birthDate)) {
+        res.status(500).send(errorsKeyValue.BIRTHDATE_NOT_VALID);
+    }
+    if(!birthDateIsLessThan100Years(author.birthDate)) {
+        res.status(500).send(errorsKeyValue.BIRTHDATE_NOT_VALID);
+    }
 } 

@@ -1,9 +1,15 @@
 const express = require("express");
 const app = express();
-const products = require('./data/products.js');
-
 
 app.use(express.json()); 
+
+
+require("./app/routes/author.route")(app);
+require("./app/routes/report.route")(app);
+
+app.get("/", (req, res) => {
+    res.json({ message: "Projet de signalisaion" });
+  });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

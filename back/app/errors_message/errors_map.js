@@ -1,9 +1,11 @@
-export const errorsKeyValue = {
+const errorsKeyValue = {
     FINDALL_REPORT_API_DOWN : 'erreur lors de la récupération des sgnalisations',
     CREATE_REPORT_API_DOWN: 'erreur lors de la création de la signalisation',
     FINDONE_REPORT_API_NO_ID: 'une erreur est survenue lors de la récupération de la signalisation',
     FINDONE_REPORT_NOT_FOUND: 'Erreur lors de récupération de la signalisation avec cet id',
     PRODUCT_CODE_INVALID: 'code de produit invalide',
+    FINDONE_REPORT_API_NO_ID: `une erreur est survenue lors de la récupération de la signalisation`,
+    REPORT_NOT_FOUND: 'signalisation non toruvée',
 
     FINDALL_AUTHOR_API_DOWN : 'erreur lors de la récupération des auteurs',
     CREATE_AUTHOR_API_DOWN: `erreur lors de la création de l'auteur`,
@@ -20,3 +22,5 @@ export const errorsKeyValue = {
 
 
 };
+
+module.exports = errorsKeyValue;

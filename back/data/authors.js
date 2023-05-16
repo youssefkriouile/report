@@ -1,4 +1,4 @@
-export const authors = [
+const authors = [
     {
         id:1,
         firstName:"John",
@@ -23,4 +23,6 @@ export const authors = [
         birthDate:"1990-01-01",
         sexe:"Femme"
     },
-]
+];
+
+module.exports = authors;
