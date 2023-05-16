@@ -1,0 +1,36 @@
+<div class="list row">
+    <div class="col-md-6">
+      <h4>Liste des signalements</h4>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let report of reports; let i = index"
+          [class.active]="i == currentIndex"
+          (click)="setActiveReport(report, i)"
+        >
+          {{ report.id }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div *ngIf="currentReport.id">
+        <h4>Report</h4>
+        <div>
+          <label><strong>Title:</strong></label> {{ currentReport.title }}
+        </div>
+        <div>
+          <label><strong>Description:</strong></label>
+          {{ currentReport.description }}
+        </div>
+  
+        <a class="badge badge-warning" routerLink="/reports/{{ currentReport.id }}">
+          Edit
+        </a>
+      </div>
+  
+      <div *ngIf="!currentReport">
+        <br />
+        <p>Please click on a Report...</p>
+      </div>
+    </div>
+  </div>
