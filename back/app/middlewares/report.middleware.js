@@ -1,7 +1,7 @@
 const observations = require('../../data/observations');
 
 exports.productCodeIsvalid = (productCode) => {
-    if (typeof productCode !== 'string' || productCode.length > 13 || productCode.length < 10) {
+    if (!productCode || typeof productCode !== 'string' || productCode.length > 13 || productCode.length < 10) {
         return false;
     }
     return true;
