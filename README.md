@@ -1,4 +1,7 @@
 # report
+
+First of all, please pull the master branch instead of the main branch
+
 test technique de signalisation
 
 In this technical test, the backend server uses Node.js + Express for REST apis, front-end side is an Angular App with HTTPClient.
