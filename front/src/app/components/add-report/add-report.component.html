@@ -1,0 +1,79 @@
+<div class="add-report">
+  <ng-container *ngIf="!submitted">
+    <div class="add-report__author">
+      <h4>Autheur</h4>
+      <label class="add-report__label" for="firstName">Prénom</label>
+      <input
+        type="text"
+        class="add-report__input"
+        id="firstName"
+        [(ngModel)]="report.author.firstName"
+        name="firstName"
+      />
+      <label class="add-report__label" for="lastName">Nom</label>
+      <input
+        type="text"
+        class="add-report__input"
+        id="lastName"
+        [(ngModel)]="report.author.lastName"
+        name="lastName"
+      />
+        <label class="add-report__label" for="sexe">Sexe</label> 
+      <select class="add-report__input" name="sexe" [(ngModel)]="report.author.sexe">
+        <option value="{{sexe.HOMME}}">Homme</option>
+        <option value="{{sexe.FEMME}}">Femme</option>
+        <option value="{{sexe.NON_BINAIRE}}">Non Binaire</option>
+      </select>
+        <label class="add-report__label" for="sexe">Date de naissance</label>
+          <mat-form-field>
+            <input matInput name="birthdate" [(ngModel)]="report.author.birthDate" [matDatepicker]="from" >
+          
+            <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+            <mat-datepicker #from></mat-datepicker>
+          </mat-form-field>
+      <label class="add-report__label" for="email">Email</label>
+      <input
+        type="text"
+        class="add-report__input"
+        id="email"
+        [(ngModel)]="report.author.email"
+        name="email"
+      />
+    </div>
+
+    <br>
+      <label class="add-report__label" for="productCode">Code produit</label>
+      <input
+        type="text"
+        class="add-report__input"
+        id="productCode"
+        [(ngModel)]="report.productCode"
+        name="productCode"
+      />
+      <label class="add-report__label" for="observations">Observations</label>
+      <div class="add-report__input">
+          <ng-multiselect-dropdown
+            name="observations" 
+            [(ngModel)]="report.observations"
+            [settings]="dropdownSettings"
+            [data]="observations"
+          >
+          </ng-multiselect-dropdown>
+    </div>
+      <label class="add-report__label" for="description">Description</label>
+      <input
+      class="add-report__input"
+        id="description"
+        required
+        [(ngModel)]="report.description"
+        name="description"
+      />
+
+    <button (click)="saveReport()" class="btn btn-success add-report__button">Submit</button>
+  </ng-container>
+
+  <ng-container *ngIf="submitted">
+    <h4>Report was submitted successfully!</h4>
+    <button class="btn btn-success " (click)="newReport()">Add</button>
+  </ng-container>
+</div>

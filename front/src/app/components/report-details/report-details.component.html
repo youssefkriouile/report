@@ -1,0 +1,200 @@
+<!-- <div>
+    <div *ngIf="currentReport.id" class="edit-form">
+      <h4>Report</h4>
+      <br>
+      <form>
+        <h5>Auteur:</h5>
+        <div class="form-group">
+          <label for="firstName">Prénom</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            [(ngModel)]="currentReport.author.firstName"
+            name="firstName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Nom</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            [(ngModel)]="currentReport.author.lastName"
+            name="lastName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="sexe">Sexe</label>
+          <input
+            type="text"
+            class="form-control"
+            id="sexe"
+            [(ngModel)]="currentReport.author.sexe"
+            name="sexe"
+          />
+        </div>
+        <div class="form-group">
+          <label for="bithdate">Date de naissance</label>
+          <input
+            type="text"
+            class="form-control"
+            id="birthdate"
+            [(ngModel)]="currentReport.author.birthDate"
+            name="birthdate"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            [(ngModel)]="currentReport.author.email"
+            name="email"
+          />
+        </div>
+        
+        <br>
+
+        <div class="form-group">
+          <label for="productCode">Code produit</label>
+          <input
+            type="text"
+            class="form-control"
+            id="productCode"
+            [(ngModel)]="currentReport.productCode"
+            name="productCode"
+          />
+        </div>
+
+        <div class="form-group">
+            <label for="observations">Observations</label>
+            <input
+              type="text"
+              class="form-control"
+              id="observations"
+              [(ngModel)]="currentReport.observations"
+              name="observations"
+            />
+          </div>
+          <div class="form-group">
+              <label for="description">Description</label>
+              <input
+                type="text"
+                class="form-control"
+                id="description"
+                [(ngModel)]="currentReport.description"
+                name="description"
+              />
+            </div>
+
+
+      </form>
+  
+      <button
+        type="submit"
+        class="badge badge-success mb-2"
+        (click)="updateReport()"
+      >
+        Update
+      </button>
+      <p>{{ message }}</p>
+    </div>
+  
+    <div *ngIf="!currentReport.id">
+      <br />
+      <p>Cannot access this Report...</p>
+    </div>
+  </div> -->
+
+
+
+
+
+<div *ngIf="currentReport.id" class="edit-report">
+    <h4>Report</h4>
+      <div class="edit-report__author">
+        <h4>Autheur</h4>
+        <label class="edit-report__label" for="firstName">Prénom</label>
+        <input
+          type="text"
+          class="edit-report__input"
+          id="firstName"
+          [(ngModel)]="currentReport.author.firstName"
+          name="firstName"
+        />
+        <label class="edit-report__label" for="lastName">Nom</label>
+        <input
+          type="text"
+          class="edit-report__input"
+          id="lastName"
+          [(ngModel)]="currentReport.author.lastName"
+          name="lastName"
+        />
+          <label class="edit-report__label" for="sexe">Sexe</label> 
+        <select class="edit-report__input" name="sexe" [(ngModel)]="currentReport.author.sexe">
+          <option value="{{sexe.HOMME}}">Homme</option>
+          <option value="{{sexe.FEMME}}">Femme</option>
+          <option value="{{sexe.NON_BINAIRE}}">Non Binaire</option>
+        </select>
+          <label class="edit-report__label" for="sexe">Date de naissance</label>
+            <mat-form-field>
+              <input matInput name="birthdate" [(ngModel)]="currentReport.author.birthDate" [matDatepicker]="from" >
+            
+              <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+              <mat-datepicker #from></mat-datepicker>
+            </mat-form-field>
+        <label class="edit-report__label" for="email">Email</label>
+        <input
+          type="text"
+          class="edit-report__input"
+          id="email"
+          [(ngModel)]="currentReport.author.email"
+          name="email"
+        />
+      </div>
+  
+      <br>
+        <label class="edit-report__label" for="productCode">Code produit</label>
+        <input
+          type="text"
+          class="edit-report__input"
+          id="productCode"
+          [(ngModel)]="currentReport.productCode"
+          name="productCode"
+        />
+        <label class="edit-report__label" for="observations">Observations</label>
+        <div class="edit-report__input">
+          <ng-multiselect-dropdown
+            name="observations"   
+            [(ngModel)]="currentReport.observations"
+            [settings]="dropdownSettings"
+            [data]="observations"
+          >
+          </ng-multiselect-dropdown>
+      </div>
+        <label class="edit-report__label" for="description">Description</label>
+        <input
+        class="edit-report__input"
+          id="description"
+          required
+          [(ngModel)]="currentReport.description"
+          name="description"
+        />
+
+    <button
+    type="submit"
+    class="edit-report__button"
+    (click)="updateReport()"
+  >
+    Update
+  </button>
+  <p>{{ message }}</p>
+</div>
+
+<div *ngIf="!currentReport.id">
+  <br />
+  <p>Cannot access this Report...</p>
+</div>
+    

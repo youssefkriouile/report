@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Report } from '../../models/report.model';
-import { ReportService } from 'src/app/services/report.service';
+import { ReportService } from 'src/app/services/report.service'; 
+import { ObservationService } from '../../services/observation.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reports-list',
   templateUrl: './reports-list.component.html',
-  styleUrls: ['./reports-list.component.css']
+  styleUrls: ['./reports-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReportsListComponent implements OnInit {
+export class ReportsListComponent implements OnInit, OnDestroy {
 
-  reports?: Report[];
-  currentReport: Report = {};
-  currentIndex = -1;
-  title = '';
+  public reports?: Report[];
+  public currentReport: Report = {};
+  public currentIndex = -1;
+  private notifier = new Subject();
 
-  constructor(private reportService: ReportService) { }
+  constructor(
+    private reportService: ReportService, 
+    private observationService: ObservationService,
+    private readonly changeDetector: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     this.retrieveReports();
@@ -22,10 +30,11 @@ export class ReportsListComponent implements OnInit {
 
   retrieveReports(): void {
     this.reportService.getAll()
+    .pipe(takeUntil(this.notifier))
       .subscribe(
-        data => {
-          this.reports = data;
-          console.log(data);
+        (reports) => {
+          this.reports = reports;
+          this.changeDetector.markForCheck();
         },
         error => {
           console.log(error);
@@ -41,5 +50,10 @@ export class ReportsListComponent implements OnInit {
   setActiveReport(report: Report, index: number): void {
     this.currentReport = report;
     this.currentIndex = index;
+  }
+
+  ngOnDestroy(): void {
+    this.notifier.next();
+    this.notifier.complete();
   }
 }

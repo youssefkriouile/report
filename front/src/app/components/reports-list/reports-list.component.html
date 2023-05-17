@@ -13,10 +13,51 @@
       </ul>
     </div>
     <div class="col-md-6">
-      <div *ngIf="currentReport.id">
+      <div *ngIf="currentReport?.id">
         <h4>Report</h4>
         <div>
-          <label><strong>Title:</strong></label> {{ currentReport.title }}
+            <label><strong>Auteur:</strong></label>
+            <ul class="list-group">
+                <li
+                class="list-group-item"
+                >
+                <label><strong>FirstName:</strong></label> {{ currentReport.author.firstName }}
+                </li>
+                <li
+                class="list-group-item"
+                >
+                <label><strong>LastNameName:</strong></label> {{ currentReport.author.lastName }}
+                </li>
+                <li
+                class="list-group-item"
+                >
+                <label><strong>Sexe:</strong></label> {{ currentReport.author.sexe }}
+                </li>
+                <li
+                class="list-group-item"
+                >
+                <label><strong>BirthDate:</strong></label> {{ currentReport.author.birthDate }}
+                </li>
+                <li
+                class="list-group-item"
+                >
+                <label><strong>Email:</strong></label> {{ currentReport.author.email }}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <label><strong>Observations:</strong></label>
+            <ul class="list-group">
+                <li
+                class="list-group-item"
+                *ngFor="let observation of currentReport.observations; let j = index"
+                >
+                <label><strong>observation {{j+1}}:</strong></label> {{ observation.name }}
+                </li>
+            </ul>
+        </div>
+        <div>
+          <label><strong>Code de produit:</strong></label> {{ currentReport.productCode }}
         </div>
         <div>
           <label><strong>Description:</strong></label>

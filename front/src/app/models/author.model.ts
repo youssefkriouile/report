@@ -4,6 +4,6 @@ export interface Author {
     firstName: string;
     lastName: string; 
     email: string; 
-    birthDate: Date;
+    birthDate: string;
     sexe: Sexe;
 }
