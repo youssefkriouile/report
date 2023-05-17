@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Observation } from '../../models/observations.model';
 import { ObservationService } from '../../services/observation.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-report-details',
@@ -29,6 +30,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private readonly changeDetector: ChangeDetectorRef,
     private observationService: ObservationService,
+    private datePipe: DatePipe,
     private router: Router) { 
     }
 
@@ -52,7 +54,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
   }
 
 
-  getReport(id: string): void {
+  private getReport(id: string): void {
     this.reportService.get(id)
     .pipe(takeUntil(this.notifier))
       .subscribe(
@@ -61,12 +63,17 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
           this.changeDetector.markForCheck();
         },
         error => {
+          if(error && error.error && error.error.message) {
+            this.message = error.error.message 
+          }
           console.log(error);
+          this.changeDetector.markForCheck();
         });
   }
 
-  updateReport(): void {
+  public updateReport(): void {
     this.message = '';
+    this.currentReport.author.birthDate = this.datePipe.transform(this.currentReport.author.birthDate, 'yyyy-MM-dd');
     const reportInput: ReportInput = {
       report : {
         author: this.currentReport.author,
@@ -80,11 +87,15 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.notifier))
       .subscribe(
         (response: any) => {
-          this.message = response.message ? response.message : 'This report was updated successfully!';
+          this.message = response.message ? response.message : 'le Signalement a été modifié avec succès!';
           this.changeDetector.markForCheck();
         },
         error => {
+          if(error && error.error && error.error.message) {
+            this.message = error.error.message 
+          }
           console.log(error);
+          this.changeDetector.markForCheck();
         });
   }
   ngOnDestroy(): void {

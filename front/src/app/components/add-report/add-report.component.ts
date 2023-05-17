@@ -34,6 +34,7 @@ export class AddReportComponent implements OnInit, OnDestroy {
   public observations: Observation[];
   public dropdownSettings = {};
   public sexe = Sexe;
+  public message = '';
 
   constructor(
     private reportService: ReportService, 
@@ -43,6 +44,7 @@ export class AddReportComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    this.message = '';
     this.dropdownSettings = {
       idField: 'id',
       textField: 'name',
@@ -53,6 +55,11 @@ export class AddReportComponent implements OnInit, OnDestroy {
   private getObservations(): void {
     this.observationService.getAll().subscribe((observations: Observation[]) => {
       this.observations = observations;
+      this.changeDetector.markForCheck();
+    }, error => { 
+      if(error && error.error && error.error.message) {
+        this.message = error.error.message 
+      }
       this.changeDetector.markForCheck();
     });
   }
@@ -82,11 +89,17 @@ export class AddReportComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.notifier))
       .subscribe(
         response => {
+          this.message = 'Le signalement a été créé avec succès';
           this.submitted = true;
           this.changeDetector.markForCheck();
         },
         error => {
+          if(error && error.error && error.error.message) {
+            this.message = error.error.message;
+            console.log(this.message);
+          }
           console.log(error);
+          this.changeDetector.markForCheck();
         });
   }
 

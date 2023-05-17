@@ -25,7 +25,7 @@
         <option value="{{sexe.NON_BINAIRE}}">Non Binaire</option>
       </select>
         <label class="add-report__label" for="sexe">Date de naissance</label>
-          <mat-form-field>
+          <mat-form-field class="add-report__input">
             <input matInput name="birthdate" [(ngModel)]="report.author.birthDate" [matDatepicker]="from" >
           
             <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
@@ -71,9 +71,12 @@
 
     <button (click)="saveReport()" class="btn btn-success add-report__button">Submit</button>
   </ng-container>
+  <ng-container *ngIf="message">
+      <h4>{{message}}</h4>
+    
+  </ng-container>
 
   <ng-container *ngIf="submitted">
-    <h4>Report was submitted successfully!</h4>
     <button class="btn btn-success " (click)="newReport()">Add</button>
   </ng-container>
 </div>
